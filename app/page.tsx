@@ -1,113 +1,175 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
+'use client';
+import { ProCard, StatisticCard } from '@ant-design/pro-components';
+import { Button } from 'antd';
+import Link from 'next/link';
+import { LuExternalLink, LuListChecks } from 'react-icons/lu';
 
-export default function Home() {
+const { Statistic, Divider } = StatisticCard;
+const responsive = false;
+export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <main className='grid grid-cols-1 gap-4'>
+      <h3 className='text-lg font-semibold text-gray-800 leading-none'>
+        Welcome to PayPros MFM CRM!
+      </h3>
+      <Link href='/case'>
+        <Button type='primary' block size='large' icon={<LuExternalLink />}>
+          Go to All Cases
+        </Button>
+      </Link>
+      <ProCard>
+        <StatisticCard.Group>
+          <StatisticCard
+            statistic={{
+              title: 'Total Cases',
+              tip: 'Help text',
+              value: 10,
+            }}
+          />
+          <Divider />
+          <StatisticCard
+            statistic={{
+              title: 'Success',
+              value: 5,
+              status: 'success',
+            }}
+          />
+          <StatisticCard
+            statistic={{
+              title: 'Pending',
+              value: 3,
+              status: 'warning',
+            }}
+          />
+          <StatisticCard
+            statistic={{
+              title: 'Closed',
+              value: 2,
+              status: 'default',
+            }}
+          />
+        </StatisticCard.Group>
+      </ProCard>
+      <ProCard split={responsive ? 'horizontal' : 'vertical'}>
+        <StatisticCard
+          colSpan={responsive ? 24 : 6}
+          title='Fiscal Year Performance Target'
+          statistic={{
+            value: 82.6,
+            suffix: 'Billion',
+            description: (
+              <Statistic title='Day-over-day' value='6.47%' trend='up' />
+            ),
+          }}
+          chart={
+            <img
+              src='https://gw.alipayobjects.com/zos/alicdn/PmKfn4qvD/mubiaowancheng-lan.svg'
+              alt='Progress bar'
+              width='100%'
             />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+          }
+          footer={
+            <>
+              <Statistic
+                value='70.98%'
+                title='Fiscal Year Performance'
+                layout='horizontal'
+              />
+              <Statistic
+                value='86.98%'
+                title='Same Period Last Year'
+                layout='horizontal'
+              />
+              <Statistic
+                value='88.98%'
+                title='Two Years Ago'
+                layout='horizontal'
+              />
+            </>
+          }
         />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        <StatisticCard.Group
+          colSpan={responsive ? 24 : 18}
+          direction={responsive ? 'column' : undefined}
         >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+          <StatisticCard
+            statistic={{
+              title: 'Fiscal Year Total Revenue',
+              value: 601987768,
+              description: (
+                <Statistic title='Day-over-day' value='6.15%' trend='up' />
+              ),
+            }}
+            chart={
+              <img
+                src='https://gw.alipayobjects.com/zos/alicdn/zevpN7Nv_/xiaozhexiantu.svg'
+                alt='Line chart'
+                width='100%'
+              />
+            }
+          >
+            <Statistic
+              title='Market Total Revenue'
+              value={1982312}
+              layout='vertical'
+              description={
+                <Statistic title='Day-over-day' value='6.15%' trend='down' />
+              }
+            />
+          </StatisticCard>
+          <StatisticCard
+            statistic={{
+              title: 'Daily Ranking',
+              value: 6,
+              description: (
+                <Statistic title='Day-over-day' value='3.85%' trend='down' />
+              ),
+            }}
+            chart={
+              <img
+                src='https://gw.alipayobjects.com/zos/alicdn/zevpN7Nv_/xiaozhexiantu.svg'
+                alt='Line chart'
+                width='100%'
+              />
+            }
+          >
+            <Statistic
+              title='Revenue Last 7 Days'
+              value={17458}
+              layout='vertical'
+              description={
+                <Statistic title='Day-over-day' value='6.47%' trend='up' />
+              }
+            />
+          </StatisticCard>
+          <StatisticCard
+            statistic={{
+              title: 'Fiscal Year Revenue Ranking',
+              value: 2,
+              description: (
+                <Statistic title='Day-over-day' value='6.47%' trend='up' />
+              ),
+            }}
+            chart={
+              <img
+                src='https://gw.alipayobjects.com/zos/alicdn/zevpN7Nv_/xiaozhexiantu.svg'
+                alt='Line chart'
+                width='100%'
+              />
+            }
+          >
+            <Statistic
+              title='Monthly Paying Users'
+              value={601}
+              layout='vertical'
+              description={
+                <Statistic title='Day-over-day' value='6.47%' trend='down' />
+              }
+            />
+          </StatisticCard>
+        </StatisticCard.Group>
+      </ProCard>
     </main>
   );
 }
