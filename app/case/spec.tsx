@@ -52,5 +52,6 @@ export const columns: ProColumns<Case>[] = [
   {
     title: 'Workflow',
     dataIndex: ['workFlow', 'name'],
+    hidden: true,
   },
 ];

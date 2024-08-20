@@ -3,7 +3,7 @@ import type { MenuProps } from 'antd';
 import { Layout, Menu, theme, Tooltip } from 'antd';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   FaBook,
   FaBookOpen,
@@ -129,7 +129,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
             items={sideMenuItems}
           />
         </Sider>
-        <div className='p-4 bg-gray-100 w-full h-full max-h-full overflow-auto '>
+        <div className='p-4 bg-gray-100 flex flex-col w-full h-full max-h-full overflow-auto '>
           {pathname !== '/' && (
             <nav className='breadcrumb flex items-center gap-2 justify-start mb-4'>
               <Tooltip title='Home'>
@@ -141,7 +141,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
                 .split('/')
                 .filter(Boolean)
                 .map((path, index) => (
-                  <>
+                  <Fragment key={path}>
                     <span className='select-none'>/</span>
                     <Link
                       className='text-gray-600 hover:text-gray-800 capitalize'
@@ -154,7 +154,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
                       .slice(0, index + 1)
                       .join('/')}`} */}
                     </Link>
-                  </>
+                  </Fragment>
                 ))}
             </nav>
           )}

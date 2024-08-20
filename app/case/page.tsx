@@ -4,10 +4,14 @@ import { PlusOutlined } from '@ant-design/icons';
 import { ProCard, ProTable, TableDropdown } from '@ant-design/pro-components';
 import { Button, message, Tooltip } from 'antd';
 
+import { cases } from '@/data/cases';
+import Link from 'next/link';
+
 export default function Page() {
   return (
     <ProCard>
       <ProTable<Case>
+        scroll={{ x: 'max-content' }}
         columns={[
           {
             title: 'Case ID',
@@ -95,7 +99,7 @@ export default function Page() {
           // }
           // return { data: [data], success: !error };
           return {
-            data: caseData.map((item) => ({
+            data: cases.map((item) => ({
               ...item,
               data: btoa(item.data),
             })),
@@ -109,7 +113,7 @@ export default function Page() {
         dateFormatter='string'
         headerTitle='Query Table'
         toolBarRender={() => [
-          <Button key='3' type='primary'>
+          <Button key='3' type='primary' disabled>
             <PlusOutlined />
             New
           </Button>,
@@ -118,6 +122,3 @@ export default function Page() {
     </ProCard>
   );
 }
-
-import { caseData } from './caseData';
-import Link from 'next/link';

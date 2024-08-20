@@ -31,3 +31,8 @@ body {
     text-wrap: balance;
   }
 }
+
+.ant-pro-chat-chat-list-container {
+  overflow-y: auto !important;
+  height: 100% !important;
+}
