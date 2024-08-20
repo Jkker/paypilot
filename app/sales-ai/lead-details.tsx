@@ -33,7 +33,7 @@ export default function Component() {
   const [currentPage, setCurrentPage] = useState(1)
   const leadsPerPage = 4
 
-  const filteredLeads = mockLeads.filter(lead => 
+  const filteredLeads = mockLeads.filter(lead =>
     (lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
      lead.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
      lead.email.toLowerCase().includes(searchTerm.toLowerCase())) &&

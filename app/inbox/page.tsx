@@ -1,5 +1,6 @@
 'use client';
-import { EmailList, EmailCard } from '@/components/EmailCard';
+import ClientOnly from '@/components/ClientOnly';
+import { EmailList } from '@/components/EmailCard';
 import type { Email } from '@/lib';
 const emails: Email[] = [
   {
@@ -41,8 +42,8 @@ const emails: Email[] = [
 ];
 export default function Page() {
   return (
-    <>
+    <ClientOnly>
       <EmailList emails={emails} />
-    </>
+    </ClientOnly>
   );
 }

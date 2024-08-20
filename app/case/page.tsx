@@ -2,12 +2,23 @@
 import ClientOnly from '@/components/ClientOnly';
 import { type Case } from '@/lib';
 import { fetchCases } from '@/lib/fetchCaseData';
+import { toTitleCase } from '@/lib/text';
 import { ProCard, ProTable, TableDropdown } from '@ant-design/pro-components';
 import { Button, message, Tooltip } from 'antd';
 import Link from 'next/link';
+import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
+const statusMap = {
+  ACKNOWLEDGED: 'Success',
+  PENDING: 'Warning',
+  CLOSED: 'Default',
+  OPEN: 'Processing',
+};
+
 export default function Page() {
+  const [data, setData] = useState<Case[]>([]);
+
   return (
     <ClientOnly>
       <ProCard>
@@ -58,17 +69,16 @@ export default function Page() {
               filters: true,
               onFilter: true,
               valueType: 'select',
-              valueEnum: {
-                ACKNOWLEDGED: { text: 'Acknowledged', status: 'Success' },
-                PENDING: { text: 'Pending', status: 'Warning' },
-                CLOSED: { text: 'Closed', status: 'Default' },
-                ...Object.fromEntries(
-                  ['OPEN', 'HOLD', 'REOPEN', 'NONE'].map((status) => [
-                    status,
-                    { text: status, status: 'Processing' },
-                  ]),
-                ),
-              },
+              valueEnum: data.reduce(
+                (acc, row) => {
+                  acc[row.status] = {
+                    text: toTitleCase(row.status),
+                    status: statusMap[row.status] ?? 'processing',
+                  };
+                  return acc;
+                },
+                {} as Record<string, { text: string; status: string }>,
+              ),
             },
             {
               title: 'Assigned To',
@@ -94,10 +104,14 @@ export default function Page() {
               ],
             },
           ]}
-          request={async (params) => ({
-            data: await fetchCases(),
-            success: true,
-          })}
+          request={async (params) => {
+            const data = await fetchCases();
+            setData(data);
+            return {
+              data,
+              success: true,
+            };
+          }}
           pagination={{
             pageSizeOptions: ['20', '50', '100'],
             defaultPageSize: 20,

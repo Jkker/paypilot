@@ -21,7 +21,7 @@ export const SubTitle = ({
   icon?: React.ReactNode;
 }) => {
   return (
-    <h3 className='text-lg font-semibold text-gray-800 flex items-center gap-2'>
+    <h3 className='text-lg font-semibold text-gray-800 flex items-center gap-2 leading-none mt-2'>
       {icon}
       {children}
     </h3>

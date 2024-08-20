@@ -1,4 +1,12 @@
-import { client, type Case } from '@/lib';
+// import { client } from '@/lib';
+import { type Case } from '@/lib';
+import { cases } from '@/data/cases';
+
+const client = {
+  GET: async (path: string) => {
+    return { data: cases, error: null };
+  },
+};
 
 export const decodedCaseData = (caseData: Case) => ({
   ...caseData,

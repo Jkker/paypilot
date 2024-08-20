@@ -6,15 +6,19 @@ import { ProCard, ProDescriptions } from '@ant-design/pro-components';
 export function CaseDetails({ data }: { data: Case }) {
   'use client';
   return (
-    <ProCard
-      title={data.subject}
-      extra={<div className='text-gray-700'>Case # {data.caseId}</div>}
-    >
+    <ProCard title={data.subject}>
       <ProDescriptions
+        column={2}
         columns={[
+          {
+            title: 'Case ID',
+            dataIndex: 'caseId',
+            copyable: true,
+          },
           {
             title: 'Solicitor ID',
             dataIndex: 'solicitorId',
+            copyable: true,
           },
           {
             title: 'Subject',
@@ -26,6 +30,8 @@ export function CaseDetails({ data }: { data: Case }) {
             title: 'Created At',
             dataIndex: 'createdAt',
             valueType: 'dateTime',
+            render: (text) =>
+              typeof text === 'string' && new Date(text).toLocaleString(),
           },
 
           {
