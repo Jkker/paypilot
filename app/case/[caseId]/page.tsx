@@ -1,7 +1,9 @@
-import { CaseDetails } from './CaseDetails';
-import { MessageHistory } from './MessageHistory';
-import { fetchOneCase } from '../../../lib/fetchCaseData';
-import { WorkflowView } from '@/app/WorkflowView';
+import { CaseDetails } from '@/components/CaseDetails';
+import { EmailList } from '@/components/EmailCard';
+import { MessageHistory } from '@/components/MessageHistory';
+import { SubTitle } from '@/components/Text';
+import { WorkflowView } from '@/components/WorkflowView';
+import { fetchOneCase } from '@/lib/fetchCaseData';
 
 export default async function Page({ params }: { params: { caseId: string } }) {
   const data = await fetchOneCase(params);
@@ -23,13 +25,26 @@ export default async function Page({ params }: { params: { caseId: string } }) {
   console.log(`🚀 ~ file: page.tsx:27 ~ Page ~ data:`, data);
   return (
     <main className='grid grid-cols-1 gap-4'>
-      <h3 className='text-lg font-semibold text-gray-800'>Case Details</h3>
+      <SubTitle icon='📂'>Case Details</SubTitle>
       <CaseDetails data={data} />
-      <h3 className='text-lg font-semibold text-gray-800'>
-        Communication History
-      </h3>
-      {data.workFlow && <WorkflowView workflow={data.workFlow} />}
-      <MessageHistory messages={messages} data={data} />
+
+      {data.workFlow && (
+        <>
+          <SubTitle icon='🔄'>Workflow</SubTitle>
+          <WorkflowView workflow={data.workFlow} />
+        </>
+      )}
+      <SubTitle icon='📝'>Messages</SubTitle>
+      <EmailList
+        emails={[
+          {
+            subject: data.subject,
+            body: data.data,
+            from: data.solicitorId,
+            to: 'MFM Support',
+          },
+        ]}
+      />
     </main>
   );
 }

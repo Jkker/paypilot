@@ -1,19 +1,9 @@
 'use client';
-import { type WorkFlow, type WorkItem } from '@/lib';
+import { type WorkFlow, type WorkItem, type WorkflowStatus } from '@/lib';
 import { toTitleCase } from '@/lib/text';
 import { ProCard, ProDescriptions } from '@ant-design/pro-components';
 import { Steps } from 'antd';
 import type { StepProps } from 'antd/lib';
-
-type WorkflowStatus =
-  | 'COMPLETED'
-  | 'FAILED'
-  | 'STOP'
-  | 'PROCEED'
-  | 'ACKNOWLEDGED'
-  | 'HOLD'
-  | 'ACCEPTED'
-  | 'PROCESSED';
 
 const WorkflowStatusValueEnum = {
   COMPLETED: { text: 'Completed', status: 'Success' },

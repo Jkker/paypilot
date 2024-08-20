@@ -1,11 +1,11 @@
 'use client';
-import ClientOnly from '@/component/ClientOnly';
+import ClientOnly from '@/components/ClientOnly';
 import { type Case } from '@/lib';
+import { fetchCases } from '@/lib/fetchCaseData';
 import { ProCard, ProTable, TableDropdown } from '@ant-design/pro-components';
 import { Button, message, Tooltip } from 'antd';
 import Link from 'next/link';
 import { FaPlus } from 'react-icons/fa';
-import { fetchCases } from '../../lib/fetchCaseData';
 
 export default function Page() {
   return (

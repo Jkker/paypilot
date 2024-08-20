@@ -1,5 +1,5 @@
 'use client';
-import ClientOnly from '@/component/ClientOnly';
+import ClientOnly from '@/components/ClientOnly';
 import { client } from '@/lib';
 import { ProChat } from '@ant-design/pro-chat';
 

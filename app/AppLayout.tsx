@@ -1,5 +1,5 @@
 'use client';
-import ClientOnly from '@/component/ClientOnly';
+import ClientOnly from '@/components/ClientOnly';
 import { APP_NAME } from '@/CONSTNATS';
 import Logo from '@/public/logo.png';
 import { Avatar, Button, Dropdown, Input, Layout, Menu, Tooltip } from 'antd';
@@ -42,7 +42,6 @@ const navItems = [
     key: 'inbox',
     label: 'Ticket Inbox',
     icon: <FaInbox />,
-    disabled: true,
   },
   {
     key: 'chat',
@@ -157,10 +156,17 @@ const App = ({ children }: { children: React.ReactNode }) => {
             menu={{
               items: localeOptions,
               selectable: true,
+              onSelect: (key) => {
+                setLocale(key.key);
+              },
             }}
           >
             <Button
-              icon={localeOptions.find((item) => item.key === locale)?.icon}
+              icon={
+                <span>
+                  {localeOptions.find((item) => item.key === locale)?.icon}
+                </span>
+              }
             />
           </Dropdown>
           <Button
