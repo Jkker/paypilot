@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
+import { APP_NAME } from '@/CONSTNATS';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import Link from 'next/link';
@@ -11,7 +12,7 @@ export default function Page() {
   return (
     <main className='grid grid-cols-1 gap-4'>
       <h3 className='text-lg font-semibold text-gray-800 leading-none'>
-        Welcome to PayPros MFM CRM!
+        Welcome to {APP_NAME}!
       </h3>
 
       <ProCard>
@@ -168,7 +169,7 @@ export default function Page() {
       </ProCard>
       <Link href='/case'>
         <Button type='primary' block size='large' icon={<LuExternalLink />}>
-          Go to All Cases
+          View All Cases
         </Button>
       </Link>
     </main>

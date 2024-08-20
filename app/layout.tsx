@@ -8,7 +8,7 @@ import React from 'react';
 import AppLayout from './AppLayout';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+// const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
@@ -22,9 +22,18 @@ export default function RootLayout({
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <body className={inter.className}>
+      <body>
         <AntdRegistry>
-          <ConfigProvider locale={enUS}>
+          <ConfigProvider
+            locale={enUS}
+            theme={{
+              token: {
+                colorPrimary: '#071C74',
+                colorBorderSecondary: '#e5e7eb',
+                fontFamily: `var(--font-family-sans-serif)`,
+              },
+            }}
+          >
             <App>
               <AppLayout>{children}</AppLayout>
             </App>

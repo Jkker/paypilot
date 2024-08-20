@@ -1,11 +1,12 @@
+'use client';
 import ClientOnly from '@/component/ClientOnly';
 import { APP_NAME } from '@/CONSTNATS';
 import Logo from '@/public/logo.png';
-import { Layout, Menu, Tooltip } from 'antd';
+import { Avatar, Button, Dropdown, Input, Layout, Menu, Tooltip } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   FaBook,
   FaBookOpen,
@@ -19,7 +20,11 @@ import {
   FaHome,
   FaInbox,
   FaList,
+  FaRegBell,
   FaRobot,
+  FaSignOutAlt,
+  FaUser,
+  FaUserAlt,
   FaUsers,
 } from 'react-icons/fa';
 const navItems = [
@@ -95,6 +100,28 @@ const navItems = [
   },
 ];
 
+const localeOptions = [
+  {
+    key: 'en',
+    label: 'English',
+    icon: '🇺🇸',
+  },
+  {
+    key: 'es',
+    label: 'Spanish',
+    icon: '🇪🇸',
+  },
+  {
+    key: 'fr',
+    label: 'French',
+    icon: '🇫🇷',
+  },
+  {
+    key: 'de',
+    label: 'German',
+    icon: '🇩🇪',
+  },
+];
 const App = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -104,6 +131,8 @@ const App = ({ children }: { children: React.ReactNode }) => {
   const basePathLabel = navItems.find((item) => item.key === basePath)?.label;
   const title = basePath ? `${basePathLabel} - ${APP_NAME}` : APP_NAME;
 
+  const [locale, setLocale] = useState('en');
+
   return (
     <Layout
       style={{
@@ -111,20 +140,61 @@ const App = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       <title>{title}</title>
-      <header className='flex items-center w-full justify-between bg-gray-800 px-4 py-2'>
+      <header className='flex items-center w-full justify-between bg-white px-4 py-2 shadow-md z-10'>
         <Link
           href='/'
           className='text-white hover:text-gray-50 text-xl flex items-center justify-normal whitespace-nowrap text-ellipsis leading-none gap-2'
         >
-          {/* <FaBolt /> */}
-          {/* PayPilot CRM */}
-          <Image src={Logo} alt={APP_NAME} width={100} height={30} />
+          <Image src={Logo} alt={APP_NAME} height={36} className='-mb-2' />
         </Link>
-        <div>
-          <input
-            placeholder='Search...'
-            className='bg-gray-600 px-2 py-1 rounded-md text-white'
+        <Input.Search
+          placeholder='Search...'
+          variant='filled'
+          className='max-w-96 min-w-max h-8 min-h-8'
+        />
+        <div className='flex gap-2'>
+          <Dropdown
+            menu={{
+              items: localeOptions,
+              selectable: true,
+            }}
+          >
+            <Button
+              icon={localeOptions.find((item) => item.key === locale)?.icon}
+            />
+          </Dropdown>
+          <Button
+            aria-label='Notification'
+            icon={<FaRegBell />}
+            type='default'
+            className='text-gray-600'
           />
+          <Dropdown
+            className='cursor-pointer'
+            menu={{
+              items: [
+                {
+                  key: 'profile',
+                  label: 'Profile',
+                  icon: <FaUserAlt />,
+                },
+                {
+                  key: 'settings',
+                  label: 'Settings',
+                  icon: <FaCog />,
+                },
+                {
+                  key: 'logout',
+                  label: 'Logout',
+                  icon: <FaSignOutAlt />,
+                },
+              ],
+            }}
+          >
+            <Avatar>
+              <FaUser />
+            </Avatar>
+          </Dropdown>
         </div>
         {/* <nav className='flex items-center gap-2'>
           {navItems.map((item) => (
@@ -145,20 +215,16 @@ const App = ({ children }: { children: React.ReactNode }) => {
         </nav> */}
       </header>
       <Layout>
-        <Layout.Sider theme='light'>
-          <ClientOnly>
-            <Menu
-              // mode='inline'
-              selectedKeys={[pathname.replace('/', '')]}
-              // selectedKeys={[pathname]}
-              style={{ height: '100%', borderRight: 0 }}
-              items={navItems}
-              onClick={(e) => {
-                console.log(`🚀 ~ file: AppLayout.tsx:152 ~ App ~ e:`, e);
-                router.push('/' + e.keyPath.join('/'));
-              }}
-            />
-          </ClientOnly>
+        <Layout.Sider theme='light' className='pt-2'>
+          <Menu
+            mode='vertical'
+            selectedKeys={[pathname.replace('/', '')]}
+            items={navItems}
+            onClick={(e) => {
+              console.log(`🚀 ~ file: AppLayout.tsx:152 ~ App ~ e:`, e);
+              router.push('/' + e.keyPath.join('/'));
+            }}
+          />
         </Layout.Sider>
         <div className='p-4 bg-gray-100 flex flex-col w-full h-full max-h-full overflow-auto '>
           {pathname !== '/' && (
