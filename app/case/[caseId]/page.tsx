@@ -4,6 +4,7 @@ import { MessageHistory } from '@/components/MessageHistory';
 import { SubTitle } from '@/components/Text';
 import { WorkflowView } from '@/components/WorkflowView';
 import { fetchOneCase } from '@/lib/fetchCaseData';
+import { Empty } from 'antd';
 
 export default async function Page({ params }: { params: { caseId: string } }) {
   const data = await fetchOneCase(params);
@@ -23,6 +24,9 @@ export default async function Page({ params }: { params: { caseId: string } }) {
     },
   ];
   console.log(`🚀 ~ file: page.tsx:27 ~ Page ~ data:`, data);
+  if (!data) {
+    return <Empty />;
+  }
   return (
     <main className='grid grid-cols-1 gap-4'>
       <SubTitle icon='📂'>Case Details</SubTitle>
@@ -42,9 +46,11 @@ export default async function Page({ params }: { params: { caseId: string } }) {
             body: data.data,
             from: data.solicitorId,
             to: 'MFM Support',
+            date: data.createdAt,
           },
         ]}
       />
     </main>
   );
 }
+export const dynamic = 'force-static';

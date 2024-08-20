@@ -62,6 +62,12 @@ export default function Page() {
                 ACKNOWLEDGED: { text: 'Acknowledged', status: 'Success' },
                 PENDING: { text: 'Pending', status: 'Warning' },
                 CLOSED: { text: 'Closed', status: 'Default' },
+                ...Object.fromEntries(
+                  ['OPEN', 'HOLD', 'REOPEN', 'NONE'].map((status) => [
+                    status,
+                    { text: status, status: 'Processing' },
+                  ]),
+                ),
               },
             },
             {

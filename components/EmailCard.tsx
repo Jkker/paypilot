@@ -24,7 +24,7 @@ export const EmailCard = ({ subject, body, ...email }: Email) => {
             )}
           </div>
           <div className='text-gray-600 ml-auto mb-auto text-right text-sm'>
-            {dayjs(email.date).format('LL')}
+            {dayjs(email.date).toDate().toLocaleDateString()}
             <br />
             {dayjs(email.date).fromNow()}
           </div>
