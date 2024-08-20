@@ -2,7 +2,6 @@
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { App, ConfigProvider } from 'antd';
 import enUS from 'antd/locale/en_US';
-import { Inter } from 'next/font/google';
 import Head from 'next/head';
 import React from 'react';
 import AppLayout from './AppLayout';
@@ -28,7 +27,7 @@ export default function RootLayout({
             locale={enUS}
             theme={{
               token: {
-                colorPrimary: '#071C74',
+                colorPrimary: '#2462ff',
                 colorBorderSecondary: '#e5e7eb',
                 fontFamily: `var(--font-family-sans-serif)`,
               },

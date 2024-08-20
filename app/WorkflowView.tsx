@@ -31,7 +31,7 @@ const workflowStatusMap = {
   FAILED: 'error',
   STOP: 'error',
   PROCEED: 'process',
-  ACKNOWLEDGED: 'finish',
+  ACKNOWLEDGED: 'process',
   HOLD: 'wait',
   ACCEPTED: 'finish',
   PROCESSED: 'finish',
@@ -39,7 +39,7 @@ const workflowStatusMap = {
 
 const mapWorkItemToStep = (workItem: WorkItem): StepProps[] => {
   const { name, workResult, works } = workItem;
-  const { extensions, status } = workResult;
+  const { extensions, status } = workResult ?? {};
 
   const description = (
     <ProDescriptions<WorkItem['workResult']['extensions']>
@@ -79,12 +79,21 @@ const mapWorkItemToStep = (workItem: WorkItem): StepProps[] => {
     status: workflowStatusMap[status as WorkflowStatus],
   };
 
-  const nestedSteps = works ? works.flatMap(mapWorkItemToStep) : [];
+  const nestedSteps = works
+    ? works
+        .flatMap((w) => w)
+        .filter(Boolean)
+        .flatMap(mapWorkItemToStep)
+    : [];
 
   return [step, ...nestedSteps];
 };
 
 export const WorkflowView = ({ workflow }: { workflow: WorkFlow }) => {
+  console.log(
+    `🚀 ~ file: WorkflowView.tsx:93 ~ WorkflowView ~ workflow:`,
+    workflow,
+  );
   const stepItems = workflow?.works?.flatMap(mapWorkItemToStep) || [];
 
   return (
