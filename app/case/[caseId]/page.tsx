@@ -1,6 +1,7 @@
 import { CaseDetails } from './CaseDetails';
 import { MessageHistory } from './MessageHistory';
-import { fetchOneCase } from './fetchCaseData';
+import { fetchOneCase } from '../../../lib/fetchCaseData';
+import { WorkflowView } from '@/app/WorkflowView';
 
 export default async function Page({ params }: { params: { caseId: string } }) {
   const data = await fetchOneCase(params);
@@ -19,6 +20,7 @@ export default async function Page({ params }: { params: { caseId: string } }) {
       message: 'Sure, I can help you with that.',
     },
   ];
+  console.log(`🚀 ~ file: page.tsx:27 ~ Page ~ data:`, data);
   return (
     <main className='grid grid-cols-1 gap-4'>
       <h3 className='text-lg font-semibold text-gray-800'>Case Details</h3>
@@ -26,6 +28,7 @@ export default async function Page({ params }: { params: { caseId: string } }) {
       <h3 className='text-lg font-semibold text-gray-800'>
         Communication History
       </h3>
+      {data.workFlow && <WorkflowView workflow={data.workFlow} />}
       <MessageHistory messages={messages} data={data} />
     </main>
   );

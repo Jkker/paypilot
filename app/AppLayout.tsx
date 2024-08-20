@@ -1,3 +1,4 @@
+import { toTitleCase } from '@/lib/text';
 import { cn } from '@/utils';
 import type { MenuProps } from 'antd';
 import { Layout, Tooltip } from 'antd';
@@ -31,17 +32,17 @@ const navItems = [
   },
   {
     key: 'case',
-    label: 'Case',
+    label: 'Case Management',
     icon: <FaList />,
   },
   {
     key: 'inbox',
-    label: 'Inbox',
+    label: 'Ticket Inbox',
     icon: <FaInbox />,
   },
   {
     key: 'chat',
-    label: 'Assistant',
+    label: 'Service Copilot',
     icon: <FaRobot />,
   },
   {
@@ -100,12 +101,18 @@ const sideMenuItems: MenuProps['items'] = [
 const App = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
+  const basePath = pathname.split('/')[1];
+
+  const basePathLabel = navItems.find((item) => item.key === basePath)?.label;
+  const title = basePath ? `${basePathLabel} - PayPro CRM` : 'PayPro CRM';
+
   return (
     <Layout
       style={{
         height: '100vh',
       }}
     >
+      <title>{title}</title>
       <header className='flex items-center w-full justify-between bg-gray-800 px-4 py-2'>
         <Link
           href='/'

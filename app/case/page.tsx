@@ -1,14 +1,10 @@
 'use client';
-import { client, type Case } from '@/lib';
+import { type Case } from '@/lib';
 import { PlusOutlined } from '@ant-design/icons';
 import { ProCard, ProTable, TableDropdown } from '@ant-design/pro-components';
 import { Button, message, Tooltip } from 'antd';
 import Link from 'next/link';
-import {
-  decodedCaseData,
-  ensureCaseArray,
-  fetchCases,
-} from './[caseId]/fetchCaseData';
+import { fetchCases } from '../../lib/fetchCaseData';
 
 export default function Page() {
   return (
