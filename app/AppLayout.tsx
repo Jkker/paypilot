@@ -1,11 +1,12 @@
 import ClientOnly from '@/component/ClientOnly';
-import type { MenuProps } from 'antd';
+import { APP_NAME } from '@/CONSTNATS';
+import Logo from '@/public/logo.png';
 import { Layout, Menu, Tooltip } from 'antd';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { Fragment } from 'react';
 import {
-  FaBolt,
   FaBook,
   FaBookOpen,
   FaBullhorn,
@@ -21,7 +22,6 @@ import {
   FaRobot,
   FaUsers,
 } from 'react-icons/fa';
-
 const navItems = [
   {
     key: '',
@@ -102,7 +102,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
   const basePath = pathname.split('/')[1];
 
   const basePathLabel = navItems.find((item) => item.key === basePath)?.label;
-  const title = basePath ? `${basePathLabel} - PayPro CRM` : 'PayPro CRM';
+  const title = basePath ? `${basePathLabel} - ${APP_NAME}` : APP_NAME;
 
   return (
     <Layout
@@ -116,8 +116,9 @@ const App = ({ children }: { children: React.ReactNode }) => {
           href='/'
           className='text-white hover:text-gray-50 text-xl flex items-center justify-normal whitespace-nowrap text-ellipsis leading-none gap-2'
         >
-          <FaBolt />
-          PayPilot CRM
+          {/* <FaBolt /> */}
+          {/* PayPilot CRM */}
+          <Image src={Logo} alt={APP_NAME} width={100} height={30} />
         </Link>
         <div>
           <input
