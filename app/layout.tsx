@@ -1,13 +1,12 @@
 'use client';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
-import React from 'react';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
 import { App, ConfigProvider } from 'antd';
-import AppLayout from './AppLayout';
-import Head from 'next/head';
 import enUS from 'antd/locale/en_US';
+import { Inter } from 'next/font/google';
+import Head from 'next/head';
+import React from 'react';
+import AppLayout from './AppLayout';
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 

@@ -1,9 +1,8 @@
-import { toTitleCase } from '@/lib/text';
-import { cn } from '@/utils';
+import ClientOnly from '@/component/ClientOnly';
 import type { MenuProps } from 'antd';
-import { Layout, Tooltip } from 'antd';
+import { Layout, Menu, Tooltip } from 'antd';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { Fragment } from 'react';
 import {
   FaBolt,
@@ -23,7 +22,6 @@ import {
   FaUsers,
 } from 'react-icons/fa';
 
-const { Header, Content, Sider } = Layout;
 const navItems = [
   {
     key: '',
@@ -39,19 +37,13 @@ const navItems = [
     key: 'inbox',
     label: 'Ticket Inbox',
     icon: <FaInbox />,
+    disabled: true,
   },
   {
     key: 'chat',
     label: 'Service Copilot',
     icon: <FaRobot />,
   },
-  {
-    key: 'settings',
-    label: 'Setting',
-    icon: <FaCog />,
-  },
-];
-const sideMenuItems: MenuProps['items'] = [
   {
     key: 'sales',
     label: 'Sales Intelligence',
@@ -96,10 +88,16 @@ const sideMenuItems: MenuProps['items'] = [
       },
     ],
   },
+  {
+    key: 'settings',
+    label: 'Setting',
+    icon: <FaCog />,
+  },
 ];
 
 const App = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const basePath = pathname.split('/')[1];
 
@@ -119,9 +117,15 @@ const App = ({ children }: { children: React.ReactNode }) => {
           className='text-white hover:text-gray-50 text-xl flex items-center justify-normal whitespace-nowrap text-ellipsis leading-none gap-2'
         >
           <FaBolt />
-          PayPros CRM
+          PayPilot CRM
         </Link>
-        <nav className='flex items-center gap-2'>
+        <div>
+          <input
+            placeholder='Search...'
+            className='bg-gray-600 px-2 py-1 rounded-md text-white'
+          />
+        </div>
+        {/* <nav className='flex items-center gap-2'>
           {navItems.map((item) => (
             <Link
               href={`/${item.key}`}
@@ -137,18 +141,24 @@ const App = ({ children }: { children: React.ReactNode }) => {
               {item.label}
             </Link>
           ))}
-        </nav>
+        </nav> */}
       </header>
       <Layout>
-        {/* <Sider>
-          <Menu
-            mode='inline'
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{ height: '100%', borderRight: 0 }}
-            items={sideMenuItems}
-          />
-        </Sider> */}
+        <Layout.Sider theme='light'>
+          <ClientOnly>
+            <Menu
+              // mode='inline'
+              selectedKeys={[pathname.replace('/', '')]}
+              // selectedKeys={[pathname]}
+              style={{ height: '100%', borderRight: 0 }}
+              items={navItems}
+              onClick={(e) => {
+                console.log(`🚀 ~ file: AppLayout.tsx:152 ~ App ~ e:`, e);
+                router.push('/' + e.keyPath.join('/'));
+              }}
+            />
+          </ClientOnly>
+        </Layout.Sider>
         <div className='p-4 bg-gray-100 flex flex-col w-full h-full max-h-full overflow-auto '>
           {pathname !== '/' && (
             <nav className='breadcrumb flex items-center gap-2 justify-start mb-4'>
