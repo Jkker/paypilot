@@ -1,24 +1,53 @@
-import { cn } from '@/utils';
-import type { MenuProps } from 'antd';
-import { Layout, Menu, theme, Tooltip } from 'antd';
+'use client';
+import ClientOnly from '@/components/ClientOnly';
+import { APP_NAME } from '@/CONSTNATS';
+import Logo from '@/public/logo.png';
+import { Avatar, Button, Dropdown, Input, Layout, Menu, Tooltip } from 'antd';
+import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { Fragment, useState } from 'react';
 import {
   FaBook,
   FaBookOpen,
   FaBullhorn,
   FaChartLine,
   FaClipboard,
+  FaCog,
+  FaDesktop,
   FaFile,
   FaFolderOpen,
+  FaHome,
+  FaInbox,
+  FaList,
+  FaRegBell,
+  FaRobot,
+  FaSignOutAlt,
+  FaUser,
+  FaUserAlt,
   FaUsers,
-} from 'react-icons/fa6';
-import { LuHome, LuInbox, LuList, LuMonitor, LuSettings } from 'react-icons/lu';
-
-const { Header, Content, Sider } = Layout;
-
-const sideMenuItems: MenuProps['items'] = [
+} from 'react-icons/fa';
+const navItems = [
+  {
+    key: '',
+    label: 'Dashboard',
+    icon: <FaDesktop />,
+  },
+  {
+    key: 'case',
+    label: 'Case Management',
+    icon: <FaList />,
+  },
+  {
+    key: 'inbox',
+    label: 'Ticket Inbox',
+    icon: <FaInbox />,
+  },
+  {
+    key: 'chat',
+    label: 'Service Copilot',
+    icon: <FaRobot />,
+  },
   {
     key: 'sales',
     label: 'Sales Intelligence',
@@ -63,51 +92,123 @@ const sideMenuItems: MenuProps['items'] = [
       },
     ],
   },
+  {
+    key: 'settings',
+    label: 'Setting',
+    icon: <FaCog />,
+  },
 ];
 
+const localeOptions = [
+  {
+    key: 'en',
+    label: 'English',
+    icon: '🇺🇸',
+  },
+  {
+    key: 'es',
+    label: 'Spanish',
+    icon: '🇪🇸',
+  },
+  {
+    key: 'fr',
+    label: 'French',
+    icon: '🇫🇷',
+  },
+  {
+    key: 'de',
+    label: 'German',
+    icon: '🇩🇪',
+  },
+];
 const App = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
+  const router = useRouter();
 
-  const navItems = [
-    {
-      key: '',
-      label: 'Dashboard',
-      icon: <LuMonitor />,
-    },
-    {
-      key: 'case',
-      label: 'Cases',
-      icon: <LuList />,
-    },
-    {
-      key: 'inbox',
-      label: 'Inbox',
-      icon: <LuInbox />,
-    },
-    {
-      key: 'settings',
-      label: 'Setting',
-      icon: <LuSettings />,
-    },
-  ];
+  const basePath = pathname.split('/')[1];
+
+  const basePathLabel = navItems.find((item) => item.key === basePath)?.label;
+  const title = basePath ? `${basePathLabel} - ${APP_NAME}` : APP_NAME;
+
+  const [locale, setLocale] = useState('en');
+
   return (
     <Layout
       style={{
         height: '100vh',
       }}
     >
-      <header className='flex items-center w-full justify-between bg-gray-800 px-4 py-2'>
-        <div className='text-white text-xl flex items-center justify-normal gap-1 whitespace-nowrap text-ellipsis overflow-hidden'>
-          {/* <LuMonitor /> */}
-          PayPros CRM
+      <title>{title}</title>
+      <header className='flex items-center w-full justify-between bg-white px-4 py-2 shadow-md z-10'>
+        <Link
+          href='/'
+          className='text-white hover:text-gray-50 text-xl flex items-center justify-normal whitespace-nowrap text-ellipsis leading-none gap-2'
+        >
+          <Image src={Logo} alt={APP_NAME} height={36} className='-mb-2' />
+        </Link>
+        <Input.Search
+          placeholder='Search...'
+          variant='filled'
+          className='max-w-96 min-w-max h-8 min-h-8'
+        />
+        <div className='flex gap-2'>
+          <Dropdown
+            menu={{
+              items: localeOptions,
+              selectable: true,
+              onSelect: (key) => {
+                setLocale(key.key);
+              },
+            }}
+          >
+            <Button
+              icon={
+                <span>
+                  {localeOptions.find((item) => item.key === locale)?.icon}
+                </span>
+              }
+            />
+          </Dropdown>
+          <Button
+            aria-label='Notification'
+            icon={<FaRegBell />}
+            type='default'
+            className='text-gray-600'
+          />
+          <Dropdown
+            className='cursor-pointer'
+            menu={{
+              items: [
+                {
+                  key: 'profile',
+                  label: 'Profile',
+                  icon: <FaUserAlt />,
+                },
+                {
+                  key: 'settings',
+                  label: 'Settings',
+                  icon: <FaCog />,
+                },
+                {
+                  key: 'logout',
+                  label: 'Logout',
+                  icon: <FaSignOutAlt />,
+                },
+              ],
+            }}
+          >
+            <Avatar>
+              <FaUser />
+            </Avatar>
+          </Dropdown>
         </div>
-        <nav className='flex items-center gap-2'>
+        {/* <nav className='flex items-center gap-2'>
           {navItems.map((item) => (
             <Link
               href={`/${item.key}`}
               key={item.key}
               className={cn(
-                'text-white hover:text-gray-300 hover:bg-white/10 transition-all px-2 py-1 rounded-md flex items-center gap-2 justify-center ',
+                'text-white hover:text-gray-300 hover:bg-white/10 transition-all px-2 py-1 rounded-md flex items-center gap-2 justify-center',
                 {
                   'bg-white/10': pathname === `/${item.key}`,
                 },
@@ -117,31 +218,33 @@ const App = ({ children }: { children: React.ReactNode }) => {
               {item.label}
             </Link>
           ))}
-        </nav>
+        </nav> */}
       </header>
       <Layout>
-        <Sider>
+        <Layout.Sider theme='light' className='pt-2'>
           <Menu
-            mode='inline'
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{ height: '100%', borderRight: 0 }}
-            items={sideMenuItems}
+            mode='vertical'
+            selectedKeys={[pathname.replace('/', '')]}
+            items={navItems}
+            onClick={(e) => {
+              console.log(`🚀 ~ file: AppLayout.tsx:152 ~ App ~ e:`, e);
+              router.push('/' + e.keyPath.join('/'));
+            }}
           />
-        </Sider>
-        <div className='p-4 bg-gray-100 w-full h-full max-h-full overflow-auto '>
+        </Layout.Sider>
+        <div className='p-4 bg-gray-100 flex flex-col w-full h-full max-h-full overflow-auto '>
           {pathname !== '/' && (
             <nav className='breadcrumb flex items-center gap-2 justify-start mb-4'>
               <Tooltip title='Home'>
                 <Link href='/' className='text-gray-600 hover:text-gray-800'>
-                  <LuHome />
+                  <FaHome />
                 </Link>
               </Tooltip>
               {pathname
                 .split('/')
                 .filter(Boolean)
                 .map((path, index) => (
-                  <>
+                  <Fragment key={path}>
                     <span className='select-none'>/</span>
                     <Link
                       className='text-gray-600 hover:text-gray-800 capitalize'
@@ -154,7 +257,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
                       .slice(0, index + 1)
                       .join('/')}`} */}
                     </Link>
-                  </>
+                  </Fragment>
                 ))}
             </nav>
           )}

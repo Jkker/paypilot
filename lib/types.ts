@@ -122,7 +122,23 @@ export interface components {
       workFlow?: components['schemas']['WorkFlow'];
     };
     WorkFlow: {
-      name?: string;
+      name: string;
+      works: components['schemas']['WorkItem'][];
+    };
+    WorkItem: {
+      name: string;
+      workResult: {
+        name: string;
+        extensions: {
+          caseId?: string;
+          status: string;
+          validations?: string[];
+          changeType?: string;
+        };
+        status: string;
+        results: unknown[];
+      };
+      works?: components['schemas']['WorkItem'][];
     };
     UserPrompt: {
       /** @example What is the role of the user axbadri@gmail.com */
@@ -145,8 +161,10 @@ export interface components {
       id?: string;
       name?: string;
       /** @enum {string} */
-      status?: 'ACTIVE' | 'HOLD' | 'NONE';
+      status?: 'OPEN' | 'HOLD' | 'REOPEN' | 'CLOSED' | 'NONE';
       zipCode?: string;
+      reasonCode?: string;
+      updatedBy?: string;
     };
   };
   responses: never;

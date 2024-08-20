@@ -1,15 +1,13 @@
 'use client';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
-import React from 'react';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
 import { App, ConfigProvider } from 'antd';
-import AppLayout from './AppLayout';
-import Head from 'next/head';
 import enUS from 'antd/locale/en_US';
+import Head from 'next/head';
+import React from 'react';
+import AppLayout from './AppLayout';
+import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+// const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
@@ -19,14 +17,22 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <Head>
-        <title>PayPros MFM CRM</title>
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <body className={inter.className}>
+      <body>
         <AntdRegistry>
-          <ConfigProvider locale={enUS}>
+          <ConfigProvider
+            locale={enUS}
+            theme={{
+              token: {
+                colorPrimary: '#2462ff',
+                colorBorderSecondary: '#e5e7eb',
+                fontFamily: `var(--font-family-sans-serif)`,
+              },
+            }}
+          >
             <App>
               <AppLayout>{children}</AppLayout>
             </App>
