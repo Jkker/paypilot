@@ -1,19 +1,21 @@
+'use client';
+import Link from 'next/link';
 // /components/LeadCard.js
 import React from 'react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 const LeadCard = ({ lead }) => {
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/sales-ai/leads-details?id=${lead.id}`);
+    // router.push(`/sales-ai/leads-details?id=${lead.id}`);
   };
 
   return (
-    <div onClick={handleClick} style={cardStyle}>
+    <Link href={`/sales/leads-details?id=${lead.id}`} style={cardStyle}>
       <h2 style={titleStyle}>{lead.name}</h2>
       <p style={descriptionStyle}>{lead.description}</p>
-    </div>
+    </Link>
   );
 };
 
