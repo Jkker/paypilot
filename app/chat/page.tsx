@@ -1,5 +1,6 @@
 'use client';
 import ClientOnly from '@/component/ClientOnly';
+import { client } from '@/lib';
 import { ProChat } from '@ant-design/pro-chat';
 
 const delay = (text: string) =>
@@ -20,12 +21,19 @@ export default function ChatPage() {
           helloMessage="Hello, I'm your customer support copilot 🤖"
           request={async (messages) => {
             console.log(
-              `🚀 ~ file: page.tsx:19 ~ request={ ~ messages:`,
+              `chat req`,
               messages,
             );
-            const text = await delay(String(messages.at(-1).content));
 
-            return new Response(text);
+            const { data, error } = await client.POST('/chats', {
+              body: {
+                message: String(messages.at(-1).content),
+              },
+            });
+            console.log(`chat res`, data)
+            // const text = await delay(String(messages.at(-1).content));
+
+            return new Response(data.message);
           }}
         />
       </ClientOnly>

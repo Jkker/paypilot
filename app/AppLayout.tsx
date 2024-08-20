@@ -1,23 +1,55 @@
 import { cn } from '@/utils';
 import type { MenuProps } from 'antd';
-import { Layout, Menu, theme, Tooltip } from 'antd';
+import { Layout, Tooltip } from 'antd';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { Fragment } from 'react';
 import {
+  FaBolt,
   FaBook,
   FaBookOpen,
   FaBullhorn,
   FaChartLine,
   FaClipboard,
+  FaCog,
+  FaDesktop,
   FaFile,
   FaFolderOpen,
+  FaHome,
+  FaInbox,
+  FaList,
+  FaRobot,
   FaUsers,
-} from 'react-icons/fa6';
-import { LuHome, LuInbox, LuList, LuMonitor, LuSettings } from 'react-icons/lu';
+} from 'react-icons/fa';
 
 const { Header, Content, Sider } = Layout;
-
+const navItems = [
+  {
+    key: '',
+    label: 'Dashboard',
+    icon: <FaDesktop />,
+  },
+  {
+    key: 'case',
+    label: 'Case',
+    icon: <FaList />,
+  },
+  {
+    key: 'inbox',
+    label: 'Inbox',
+    icon: <FaInbox />,
+  },
+  {
+    key: 'chat',
+    label: 'Assistant',
+    icon: <FaRobot />,
+  },
+  {
+    key: 'settings',
+    label: 'Setting',
+    icon: <FaCog />,
+  },
+];
 const sideMenuItems: MenuProps['items'] = [
   {
     key: 'sales',
@@ -68,28 +100,6 @@ const sideMenuItems: MenuProps['items'] = [
 const App = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
-  const navItems = [
-    {
-      key: '',
-      label: 'Dashboard',
-      icon: <LuMonitor />,
-    },
-    {
-      key: 'case',
-      label: 'Cases',
-      icon: <LuList />,
-    },
-    {
-      key: 'inbox',
-      label: 'Inbox',
-      icon: <LuInbox />,
-    },
-    {
-      key: 'settings',
-      label: 'Setting',
-      icon: <LuSettings />,
-    },
-  ];
   return (
     <Layout
       style={{
@@ -97,17 +107,20 @@ const App = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       <header className='flex items-center w-full justify-between bg-gray-800 px-4 py-2'>
-        <div className='text-white text-xl flex items-center justify-normal gap-1 whitespace-nowrap text-ellipsis overflow-hidden'>
-          {/* <LuMonitor /> */}
+        <Link
+          href='/'
+          className='text-white hover:text-gray-50 text-xl flex items-center justify-normal whitespace-nowrap text-ellipsis leading-none gap-2'
+        >
+          <FaBolt />
           PayPros CRM
-        </div>
+        </Link>
         <nav className='flex items-center gap-2'>
           {navItems.map((item) => (
             <Link
               href={`/${item.key}`}
               key={item.key}
               className={cn(
-                'text-white hover:text-gray-300 hover:bg-white/10 transition-all px-2 py-1 rounded-md flex items-center gap-2 justify-center ',
+                'text-white hover:text-gray-300 hover:bg-white/10 transition-all px-2 py-1 rounded-md flex items-center gap-2 justify-center',
                 {
                   'bg-white/10': pathname === `/${item.key}`,
                 },
@@ -120,7 +133,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
         </nav>
       </header>
       <Layout>
-        <Sider>
+        {/* <Sider>
           <Menu
             mode='inline'
             defaultSelectedKeys={['1']}
@@ -128,13 +141,13 @@ const App = ({ children }: { children: React.ReactNode }) => {
             style={{ height: '100%', borderRight: 0 }}
             items={sideMenuItems}
           />
-        </Sider>
+        </Sider> */}
         <div className='p-4 bg-gray-100 flex flex-col w-full h-full max-h-full overflow-auto '>
           {pathname !== '/' && (
             <nav className='breadcrumb flex items-center gap-2 justify-start mb-4'>
               <Tooltip title='Home'>
                 <Link href='/' className='text-gray-600 hover:text-gray-800'>
-                  <LuHome />
+                  <FaHome />
                 </Link>
               </Tooltip>
               {pathname

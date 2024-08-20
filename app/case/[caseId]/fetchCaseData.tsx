@@ -1,14 +1,34 @@
-import { cases } from '@/data/cases';
+import { client, type Case } from '@/lib';
 
-export async function fetchCaseData(params: { caseId: string }) {
-  const currentCase = cases.find((c) => c.caseId === params.caseId) ?? cases[0];
-  const data = {
-    ...currentCase,
-    data: currentCase.data,
-  };
+export const decodedCaseData = (caseData: Case) => ({
+  ...caseData,
+  data: atob(caseData.data),
+});
 
-  // Simulate network delay
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+export const ensureCaseArray = (data: Case | Case[]) => {
+  if (Array.isArray(data)) {
+    return data;
+  }
+  return [data];
+};
 
-  return { data };
+export async function fetchOneCase(params: { caseId?: string }) {
+  const { data, error } = await client.GET('/cases');
+  if (error) {
+    throw new Error(error);
+  }
+  const cases = ensureCaseArray(data);
+  if (params.caseId) {
+    const targetedCase =
+      cases.find((c) => c.caseId === params.caseId) ?? cases[0];
+    return decodedCaseData(targetedCase);
+  }
+}
+
+export async function fetchCases() {
+  const { data, error } = await client.GET('/cases');
+  if (error) {
+    throw new Error(error);
+  }
+  return ensureCaseArray(data).map(decodedCaseData);
 }

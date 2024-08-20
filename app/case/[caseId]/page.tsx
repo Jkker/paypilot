@@ -1,14 +1,14 @@
 import { CaseDetails } from './CaseDetails';
 import { MessageHistory } from './MessageHistory';
-import { fetchCaseData } from './fetchCaseData';
+import { fetchOneCase } from './fetchCaseData';
 
 export default async function Page({ params }: { params: { caseId: string } }) {
-  const { data } = await fetchCaseData(params);
+  const data = await fetchOneCase(params);
   const messages = [
     {
       sender: 'Client',
       time: '12:00 PM',
-      message: atob(data.data),
+      message: data.data,
     },
     {
       sender: 'Agent',

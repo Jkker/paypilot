@@ -9,6 +9,7 @@ const nextConfig = {
     '@ant-design/pro-chat',
     'react-intersection-observer',
     '@ant-design/pro-editor',
+    'shiki',
   ],
 };
 

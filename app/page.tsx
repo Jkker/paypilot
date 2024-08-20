@@ -13,11 +13,7 @@ export default function Page() {
       <h3 className='text-lg font-semibold text-gray-800 leading-none'>
         Welcome to PayPros MFM CRM!
       </h3>
-      <Link href='/case'>
-        <Button type='primary' block size='large' icon={<LuExternalLink />}>
-          Go to All Cases
-        </Button>
-      </Link>
+
       <ProCard>
         <StatisticCard.Group>
           <StatisticCard
@@ -170,6 +166,11 @@ export default function Page() {
           </StatisticCard>
         </StatisticCard.Group>
       </ProCard>
+      <Link href='/case'>
+        <Button type='primary' block size='large' icon={<LuExternalLink />}>
+          Go to All Cases
+        </Button>
+      </Link>
     </main>
   );
 }

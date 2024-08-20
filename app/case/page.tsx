@@ -1,11 +1,14 @@
 'use client';
-import { type Case } from '@/lib';
+import { client, type Case } from '@/lib';
 import { PlusOutlined } from '@ant-design/icons';
 import { ProCard, ProTable, TableDropdown } from '@ant-design/pro-components';
 import { Button, message, Tooltip } from 'antd';
-
-import { cases } from '@/data/cases';
 import Link from 'next/link';
+import {
+  decodedCaseData,
+  ensureCaseArray,
+  fetchCases,
+} from './[caseId]/fetchCaseData';
 
 export default function Page() {
   return (
@@ -92,22 +95,14 @@ export default function Page() {
             ],
           },
         ]}
-        request={async (params = {} as Record<string, any>) => {
-          // const { data, error } = await client.GET('/cases');
-          // if (error) {
-          //   throw new Error(`Failed to fetch cases: ${error}`);
-          // }
-          // return { data: [data], success: !error };
-          return {
-            data: cases.map((item) => ({
-              ...item,
-              data: btoa(item.data),
-            })),
-            success: true,
-          };
-        }}
+        request={async (params) => ({
+          data: await fetchCases(),
+          success: true,
+        })}
         pagination={{
-          pageSize: 5,
+          pageSizeOptions: ['20', '50', '100'],
+          defaultPageSize: 20,
+          hideOnSinglePage: true,
         }}
         rowKey='caseId'
         dateFormatter='string'

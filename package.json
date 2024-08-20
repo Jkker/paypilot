@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen-spec": "openapi-typescript ../PayProsBackend/src/main/resources/spec.json -o ./lib/types.ts"
+    "gen-spec": "openapi-typescript ../OPEN-AI-DEV-BACKEND/src/main/resources/spec.json -o ./lib/types.ts"
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
