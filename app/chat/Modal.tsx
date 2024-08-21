@@ -27,10 +27,17 @@ export const CopilotDrawer = () => {
         placement='left'
         onClose={onClose}
         open={isDrawerVisible}
+        styles={{
+          body: {
+            margin: 0,
+            padding: 0,
+          },
+        }}
         footer={null}
-        className='bg-gray-100'
       >
-        <ChatPage />
+        <div className='bg-gray-100 h-full scrollbar-hidden'>
+          <ChatPage />
+        </div>
       </Drawer>
     </>
   );

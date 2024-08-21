@@ -27,7 +27,7 @@ export default function RootLayout({
             locale={enUS}
             theme={{
               token: {
-                colorPrimary: '#4c8fff',
+                colorPrimary: '#071c74',
                 colorBorderSecondary: '#e5e7eb',
                 fontFamily: `var(--font-family-sans-serif)`,
               },
