@@ -27,6 +27,7 @@ import {
   FaUserAlt,
   FaUsers,
 } from 'react-icons/fa';
+import { FaUserGroup } from 'react-icons/fa6';
 const navItems = [
   {
     key: '',
@@ -53,6 +54,11 @@ const navItems = [
     label: 'Sales Intelligence',
     icon: <FaChartLine />,
     children: [
+      {
+        key: 'leads',
+        label: 'Leads',
+        icon: <FaUserGroup />,
+      },
       {
         key: 'customers',
         label: 'Customers',
