@@ -28,7 +28,7 @@ export async function fetchOneCase(params: { caseId?: string }) {
   const cases = ensureCaseArray(data);
   if (params.caseId) {
     const targetedCase = cases.find((c) => c.caseId === params.caseId);
-    if (!targetedCase) return;
+    if (!targetedCase) return decodedCaseData(cases[0]);
     return decodedCaseData(targetedCase);
   }
 }
