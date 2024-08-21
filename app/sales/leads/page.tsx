@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { useState } from 'react';
 import {
   Input,
@@ -9,12 +9,7 @@ import {
   Checkbox,
   Pagination,
 } from 'antd';
-import {
-  FaSearch,
-  FaFilter,
-  FaArrowLeft,
-  FaArrowRight,
-} from 'react-icons/fa';
+import { FaSearch, FaFilter, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import Link from 'next/link';
 
 // Mock data for leads
@@ -111,7 +106,9 @@ export default function Component() {
     {
       title: 'Lead ID',
       dataIndex: 'id',
-      render: (text: string) => <Link href={`/leads/${text}`}>{text}</Link>,
+      render: (text: string) => (
+        <Link href={`/sales/leads/${text}`}>{text}</Link>
+      ),
     },
     { title: 'Name', dataIndex: 'name' },
     { title: 'Company', dataIndex: 'company' },

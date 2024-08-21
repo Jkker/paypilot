@@ -30,7 +30,7 @@ export const EmailCard = ({
   data: caseData,
 }: {
   email: Email;
-  data: Case;
+  data?: Case;
 }) => {
   const [reply, setReply] = useState('');
   const [prev, setPrev] = useState<string | undefined>();
@@ -40,7 +40,7 @@ export const EmailCard = ({
     setIsLoading(true);
     setPrev(reply);
 
-    const content = `Given the details for case #${caseData.caseId}, draft an email for the following content: ${reply}`;
+    const content = `Given the details for case #${caseData?.caseId}, draft an email for the following content: ${reply}`;
     const { data, error } = await client.POST('/chats', {
       body: {
         message: content,
@@ -104,37 +104,43 @@ export const EmailCard = ({
           </div>
         </header>
         <Markdown className='prose whitespace-pre-wrap'>{email.body}</Markdown>
-        <TextArea
-          autoSize={{ minRows: 4 }}
-          className='border border-gray-300 p-2 rounded-md w-full'
-          placeholder='Reply to this email'
-          value={reply}
-          onChange={(e) => setReply(e.target.value)}
-        />
-        <div className='flex gap-2'>
-          <Button
-            type='primary'
-            icon={<FaMagic />}
-            onClick={draft}
-            loading={isLoading}
-          >
-            Draft
-          </Button>
-          {prev && (
-            <Button onClick={revert} icon={<FaUndoAlt />}>
-              Revert
-            </Button>
-          )}
+        {caseData && (
+          <>
+            <TextArea
+              autoSize={{ minRows: 4 }}
+              className='border border-gray-300 p-2 rounded-md w-full'
+              placeholder='Reply to this email'
+              value={reply}
+              onChange={(e) => setReply(e.target.value)}
+            />
+            <div className='flex gap-2'>
+              <Button
+                type='primary'
+                icon={<FaMagic />}
+                onClick={draft}
+                loading={isLoading}
+              >
+                Draft
+              </Button>
+              {prev && (
+                <Button onClick={revert} icon={<FaUndoAlt />}>
+                  Revert
+                </Button>
+              )}
 
-          <div className='ml-auto flex gap-2'>
-            {/* <Button icon={<FaMagic />}>Generate</Button> */}
-            <Button danger icon={<FaRegTrashCan />} onClick={clear}>
-              Clear
-            </Button>
+              <div className='ml-auto flex gap-2'>
+                {/* <Button icon={<FaMagic />}>Generate</Button> */}
+                <Button danger icon={<FaRegTrashCan />} onClick={clear}>
+                  Clear
+                </Button>
 
-            <Button icon={<FaReply />} onClick={send}>Send</Button>
-          </div>
-        </div>
+                <Button icon={<FaReply />} onClick={send}>
+                  Send
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
       </article>
     </Card>
   );
@@ -145,7 +151,7 @@ export const EmailList = ({
   data,
 }: {
   emails: Email[];
-  data: Case;
+  data?: Case;
 }) => {
   return (
     <div className='flex flex-col gap-4'>

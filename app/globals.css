@@ -30,9 +30,13 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
 }
 
-.ant-pro-chat-chat-list-container {
+/* .ant-pro-chat-chat-list-container {
   overflow-y: auto !important;
   height: 100% !important;
-}
+} */

@@ -1,6 +1,6 @@
 'use client';
-import ClientOnly from '@/components/ClientOnly';
 import { APP_NAME } from '@/CONSTNATS';
+import { toTitleCase } from '@/lib/text';
 import Logo from '@/public/logo.png';
 import { Avatar, Button, Dropdown, Input, Layout, Menu, Tooltip } from 'antd';
 import Image from 'next/image';
@@ -28,6 +28,7 @@ import {
   FaUsers,
 } from 'react-icons/fa';
 import { FaUserGroup } from 'react-icons/fa6';
+import CopilotDrawer from './chat/Modal';
 const navItems = [
   {
     key: '',
@@ -133,17 +134,15 @@ const App = ({ children }: { children: React.ReactNode }) => {
 
   const basePath = pathname.split('/')[1];
 
-  const basePathLabel = navItems.find((item) => item.key === basePath)?.label;
+  const basePathLabel =
+    navItems.find((item) => item.key === basePath)?.label ||
+    toTitleCase(basePath);
   const title = basePath ? `${basePathLabel} - ${APP_NAME}` : APP_NAME;
 
   const [locale, setLocale] = useState('en');
 
   return (
-    <Layout
-      style={{
-        height: '100vh',
-      }}
-    >
+    <Layout className='h-screen w-screen overflow-hidden relative'>
       <title>{title}</title>
       <header className='flex items-center w-full justify-between bg-white px-4 py-2 shadow-md z-10'>
         <Link
@@ -234,7 +233,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
             items={navItems}
             onClick={(e) => {
               console.log(`🚀 ~ file: AppLayout.tsx:152 ~ App ~ e:`, e);
-              router.push('/' + e.keyPath.join('/'));
+              router.push('/' + e.keyPath.toReversed().join('/'));
             }}
           />
         </Layout.Sider>
@@ -270,6 +269,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
           {children}
         </div>
       </Layout>
+      {pathname !== '/chat' && <CopilotDrawer />}
     </Layout>
   );
 };
