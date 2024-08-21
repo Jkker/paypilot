@@ -26,6 +26,7 @@ export const CopilotDrawer = () => {
         title='Customer Support Copilot'
         placement='left'
         onClose={onClose}
+        width={400}
         open={isDrawerVisible}
         styles={{
           body: {

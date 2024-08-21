@@ -32,7 +32,7 @@ export default function ChatPage() {
                 '🤖' ? (
                 arg
               ) : (
-                <Avatar icon={<FaUser />} />
+                <Avatar icon={<FaUser />} className='flex-shrink-0' />
               );
             },
           }}
@@ -40,7 +40,7 @@ export default function ChatPage() {
           locale='en-US'
           // className='max-h-full'
           placeholder='Type a message...'
-          helloMessage="Hello, I'm your customer support copilot 🤖"
+          helloMessage="Hello! I'm SupportCopilot, your AI-powered assistant here to help you swiftly and efficiently resolve customer support cases—let's get started!"
           request={async (messages) => {
             console.log(`chat req`, messages);
 
