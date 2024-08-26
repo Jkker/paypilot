@@ -1,5 +1,5 @@
 'use client';
-import { APP_NAME } from '@/CONSTNATS';
+import { APP_NAME } from '@/CONST';
 import { toTitleCase } from '@/lib/text';
 import Logo from '@/public/logo.png';
 import { Avatar, Button, Dropdown, Input, Layout, Menu, Tooltip } from 'antd';

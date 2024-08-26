@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import { APP_NAME } from '@/CONSTNATS';
+import { APP_NAME } from '@/CONST';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import Link from 'next/link';
